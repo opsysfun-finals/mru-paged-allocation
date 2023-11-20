@@ -7,14 +7,16 @@ function getPages(form) {
 }
 
 function runMRU(form) {
-    const inputString = getPages(form);
+    const outputDiv = document.getElementById('output');
+    outputDiv.innerHTML = ''; // Clear the content of the output div
 
+    const inputString = getPages(form);
+    let x = inputString.length;
     const frameSize = getFrameSize(form); // Set the size of the page frames
     const frames = [];
     let pageFaults = 0;
 
     function displayFrames() {
-        const outputDiv = document.getElementById('output');
         outputDiv.innerHTML += 'Frames: ' + frames.join(' ') + '<br>';
     }
 
@@ -41,6 +43,10 @@ function runMRU(form) {
         }
     }
 
-    const outputDiv = document.getElementById('output');
-    outputDiv.innerHTML += '<br>Total Page Faults: ' + pageFaults;
+    outputDiv.innerHTML += '<br>Total Failure: ' + pageFaults;
+    outputDiv.innerHTML += '<br>Total Success: ' + (x - pageFaults);
+    outputDiv.innerHTML += '<br>Failure Rate: ' + (((pageFaults / x) * 100).toFixed(2));
+    outputDiv.innerHTML += '<br>Success Rate: ' + (((x - pageFaults) / x) * 100).toFixed(2);
+    console.log((((x - pageFaults) / x) * 100).toFixed(2));
+    console.log(x);
 }
