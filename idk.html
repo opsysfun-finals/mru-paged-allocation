@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRU Page Replacement Algorithm</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #output {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>MRU Page Replacement Algorithm</h2>
+    <label for="inputString">Page Reference String:</label>
+    <input type="text" id="inputString" placeholder="Enter page numbers (e.g., 1 2 3 4)" />
+    <button onclick="runMRU()">Run MRU</button>
+    <div id="output"></div>
+
+    <script>
+        function runMRU() {
+            const inputString = document.getElementById('inputString').value;
+            const pageReferenceString = inputString.split(' ').map(Number);
+
+            const frameSize = 3; // Set the size of the page frames
+            const frames = [];
+            let pageFaults = 0;
+
+            function displayFrames() {
+                const outputDiv = document.getElementById('output');
+                outputDiv.innerHTML += 'Frames: ' + frames.join(' ') + '<br>';
+            }
+
+            for (let i = 0; i < pageReferenceString.length; i++) {
+                const page = pageReferenceString[i];
+
+                // Check if the page is already in the frame
+                if (frames.includes(page)) {
+                    displayFrames();
+                } else {
+                    pageFaults++;
+
+                    // Check if there is space in the frame
+                    if (frames.length < frameSize) {
+                        frames.push(page);
+                    } else {
+                        // Remove the most recently used page
+                        frames.pop();
+                        frames.push(page);
+                    }
+
+                    displayFrames();
+                }
+            }
+
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML += '<br>Total Page Faults: ' + pageFaults;
+        }
+    </script>
+</body>
+</html>
