@@ -6,6 +6,11 @@ body, html {
     padding: 0;
 }
 
+.output-tables {
+    color: white;
+    font-family: "Lexend", sans-serif;
+}
+
 .nav-bar, .main-container, .output-tables {
     display: flex;
 }
